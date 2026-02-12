@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Surprise</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial;
+
+  background-image: url('gitstick.png');
+  background-repeat: repeat;
+  background-size: 80px 80px;
+}
+
+.card{
+  background:white; /* keeps stickers OUTSIDE */
+  padding:50px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  width:400px;
+  position:relative;
+}
+
+h2{
+  color:#d6336c;
+}
+
+button{
+  padding:12px 25px;
+  margin:15px;
+  font-size:16px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+#yes{
+  background:#ff4d6d;
+  color:white;
+}
+
+#no{
+  background:#adb5bd;
+  color:white;
+  position:absolute;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Hey Darshan 💖<br>Will you be my Valentine?</h2>
+
+<button id="yes">YES 💘</button>
+<button id="no">NO 😅</button>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card = document.querySelector(".card");
+
+// Position NO initially
+noBtn.style.top = "120px";
+noBtn.style.left = "220px";
+
+// Make NO run away
+noBtn.addEventListener("mouseenter", () => {
+  const maxX = card.clientWidth - noBtn.offsetWidth;
+  const maxY = card.clientHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+});
+
+// YES goes to quiz
+yesBtn.addEventListener("click", () => {
+  window.location.href = "quiz.html";
+});
+</script>
+
+</body>
+</html>

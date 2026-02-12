@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Congratulations 💖</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial;
+  background-image:url('gitstick.png');
+  background-repeat:repeat;
+  background-size:80px 80px;
+}
+
+.card{
+  background:white;
+  padding:50px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  width:500px;
+  position:relative;
+  z-index:10;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background:#28a745;
+  color:white;
+  cursor:pointer;
+  font-size:16px;
+}
+button:hover{
+  opacity:0.8;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>Congratulations 💖</h2>
+<p>You are officially my Valentine 😌</p>
+
+<div>
+🎉 Certificate of Valentine Acceptance 🎉<br><br>
+This certifies that <b>Darshan</b><br>
+is now officially my Valentine 💘
+</div>
+
+<button id="downloadBtn">Download Certificate</button>
+</div>
+
+/* <script>
+document.getElementById("downloadBtn").addEventListener("click", function(){
+
+  const canvas = document.createElement("canvas");
+  canvas.width = 800;
+  canvas.height = 600;
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#fff0f6";
+  ctx.fillRect(0,0,800,600);
+
+  ctx.strokeStyle = "#ff4d6d";
+  ctx.lineWidth = 6;
+  ctx.strokeRect(20,20,760,560);
+
+  ctx.fillStyle = "#d6336c";
+  ctx.font = "bold 36px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("Certificate of Valentine Acceptance 💖", 400, 100);
+
+  ctx.font = "24px Arial";
+  ctx.fillText("This certifies that Darshan", 400, 170);
+  ctx.fillText("is officially my Valentine 💘", 400, 210);
+
+  const img = new Image();
+  img.src = "couple.jpeg";
+
+  img.onload = function(){
+    ctx.drawImage(img, 275, 260, 250, 200);
+
+    const link = document.createElement("a");
+    link.download = "Couple.jpeg";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  };
+
+});
+</script>*/
+<script>
+document.getElementById("downloadBtn").addEventListener("click", function(){
+    alert("Button is working!");
+});
+</script>
+
+</body>
+</html>

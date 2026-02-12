@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Quiz</title>
+<style>
+body{
+  margin:0; height:100vh;
+  display:flex; justify-content:center; align-items:center;
+  font-family:Arial; background:#fff0f6;
+}
+.card{
+  background:white; padding:40px; border-radius:20px;
+  text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  width:400px; position:relative;
+}
+h2{color:#d6336c;}
+button{
+  padding:10px 20px; margin:10px; font-size:16px;
+  border:none; border-radius:20px; cursor:pointer;
+  transition:0.3s;
+}
+button:hover{opacity:0.8;}
+.yes{background:#ff4d6d; color:white;}
+.no{background:#adb5bd; color:white; position:absolute;}
+#final-btn{display:none; background:#28a745; color:white;}
+</style>
+</head>
+<body>
+<div class="card">
+<h2>Acceptance Quiz 😌</h2>
+
+<div class="question" id="q1">
+<p>Do you promise to share your fries without pretending you're full?</p>
+<button class="yes" onclick="answerYes(1)">YES</button>
+<button class="no" onmouseenter="hideNo(1)">NO</button>
+</div>
+
+<div class="question" id="q2" class="hidden">
+<p>Will you reply fast instead of “seen 2 hours ago”?</p>
+<button class="yes" onclick="answerYes(2)">YES</button>
+<button class="no" onmouseenter="hideNo(2)">NO</button>
+</div>
+
+<div class="question" id="q3" class="hidden">
+<p>Will you hype me up like I'm the main character?</p>
+<button class="yes" onclick="answerYes(3)">YES</button>
+<button class="no" onmouseenter="hideNo(3)">NO</button>
+</div>
+
+<div class="question" id="q4" class="hidden">
+<p>Are you ready for random mood swings and still stay?</p>
+<button class="yes" onclick="answerYes(4)">YES</button>
+<button class="no" onmouseenter="hideNo(4)">NO</button>
+</div>
+
+<button id="final-btn" onclick="goFinal()">OK, I accept you 💖</button>
+</div>
+
+<script>
+function hideNo(n){
+  const btn=document.querySelector("#q"+n+" .no");
+  btn.style.display="none";
+}
+
+function answerYes(n){
+  document.getElementById("q"+n).style.display="none";
+  if(n<4){
+    document.getElementById("q"+(n+1)).style.display="block";
+  }else{
+    document.getElementById("final-btn").style.display="block";
+  }
+}
+
+function goFinal(){
+  window.location.href="final.html";
+}
+</script>
+</body>
+</html>
