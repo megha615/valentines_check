@@ -2,78 +2,256 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Valentine Quiz</title>
+<title>Funny Valentine Quiz 💘</title>
 <style>
-body{
-  margin:0; height:100vh;
-  display:flex; justify-content:center; align-items:center;
-  font-family:Arial; background:#fff0f6;
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffe6f0, #fff5f8);
+  overflow: hidden;
+  position: relative;
 }
-.card{
-  background:white; padding:40px; border-radius:20px;
-  text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  width:400px; position:relative;
+
+.card {
+  background: white;
+  padding: 40px 60px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(255, 105, 135, 0.2);
+  position: relative;
+  width: 450px;
+  z-index: 10;
 }
-h2{color:#d6336c;}
-button{
-  padding:10px 20px; margin:10px; font-size:16px;
-  border:none; border-radius:20px; cursor:pointer;
-  transition:0.3s;
+
+h2 {
+  color: #d6336c;
+  margin-bottom: 30px;
 }
-button:hover{opacity:0.8;}
-.yes{background:#ff4d6d; color:white;}
-.no{background:#adb5bd; color:white; position:absolute;}
-#final-btn{display:none; background:#28a745; color:white;}
+
+button {
+  padding: 12px 25px;
+  margin: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#start-btn {
+  background-color: #ff69a5;
+  color: white;
+}
+
+#yes-btn {
+  background-color: #ff4d6d;
+  color: white;
+}
+
+#yes-btn:hover {
+  background-color: #e0315b;
+}
+
+#no-btn {
+  background-color: #adb5bd;
+  color: white;
+  position: absolute;
+}
+
+#fun-message {
+  margin-top: 15px;
+  color: #ff4d6d;
+  font-weight: bold;
+  min-height: 24px;
+}
+
+#success-message {
+  display: none;
+  margin-top: 20px;
+  font-size: 20px;
+  color: #ff4d6d;
+  font-weight: bold;
+}
+
+#gif-container {
+  display: none;
+  margin-top: 20px;
+}
+
+.tick {
+  color: green;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+/* Hearts animation */
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: float 1.5s linear forwards;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(1); opacity:1; }
+  100% { transform: translateY(-150px) scale(1.5); opacity:0; }
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #ff4d6d;
+  opacity: 0.7;
+  animation: fall 3s linear forwards;
+  border-radius: 50%;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0deg); opacity:1; }
+  100% { transform: translateY(400px) rotate(360deg); opacity:0; }
+}
 </style>
 </head>
 <body>
-<div class="card">
-<h2>Acceptance Quiz 😌</h2>
 
-<div class="question" id="q1">
-<p>Do you promise to share your fries without pretending you're full?</p>
-<button class="yes" onclick="answerYes(1)">YES</button>
-<button class="no" onmouseenter="hideNo(1)">NO</button>
+<div class="card" id="intro-card">
+  <h2>Hey Cutie! 💖<br>Before you become my Valentine...</h2>
+  <p>Survive these hilarious tests 😏</p>
+  <button id="start-btn">Start Quiz 😎</button>
 </div>
 
-<div class="question" id="q2" class="hidden">
-<p>Will you reply fast instead of “seen 2 hours ago”?</p>
-<button class="yes" onclick="answerYes(2)">YES</button>
-<button class="no" onmouseenter="hideNo(2)">NO</button>
-</div>
-
-<div class="question" id="q3" class="hidden">
-<p>Will you hype me up like I'm the main character?</p>
-<button class="yes" onclick="answerYes(3)">YES</button>
-<button class="no" onmouseenter="hideNo(3)">NO</button>
-</div>
-
-<div class="question" id="q4" class="hidden">
-<p>Are you ready for random mood swings and still stay?</p>
-<button class="yes" onclick="answerYes(4)">YES</button>
-<button class="no" onmouseenter="hideNo(4)">NO</button>
-</div>
-
-<button id="final-btn" onclick="goFinal()">OK, I accept you 💖</button>
+<div class="card" id="quiz-card" style="display:none;">
+  <h2 id="question"></h2>
+  <button id="yes-btn">Yes 💘</button>
+  <button id="no-btn">No 😅</button>
+  <div id="fun-message"></div>
+  <div id="success-message">
+    Yayyy Darshan said YES!!! 💖🥰
+  </div>
+  <div id="gif-container">
+    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnBmYnNqcWU5ejUycTR2a251NWxicThoOXp6MnJjdXg0dHJ6dW43YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/igB2Th9e4nW6s/giphy.gif"
+         width="300">
+  </div>
 </div>
 
 <script>
-function hideNo(n){
-  const btn=document.querySelector("#q"+n+" .no");
-  btn.style.display="none";
+const introCard = document.getElementById("intro-card");
+const quizCard = document.getElementById("quiz-card");
+const startBtn = document.getElementById("start-btn");
+const questionEl = document.getElementById("question");
+const yesBtn = document.getElementById("yes-btn");
+const noBtn = document.getElementById("no-btn");
+const funMessage = document.getElementById("fun-message");
+const successMessage = document.getElementById("success-message");
+const gifContainer = document.getElementById("gif-container");
+const card = document.querySelector(".card");
+
+const questions = [
+  "🍟 Do you promise to share your fries without pretending you're full?",
+  "🌟 Will you hype me up like I'm the main character?",
+  "📱 Will you reply fast instead of 'seen 2 hours ago'?",
+  "😜 Are you ready for random mood swings and still stay?",
+  "😂 Will you survive my silly jokes and memes forever?"
+];
+
+let currentQ = 0;
+
+const funnyNoMessages = [
+  "Oops! NO is not allowed! 😅",
+  "Come on, you know the answer is YES 💘",
+  "Ha! Try again, NO disappears 😏",
+  "NO? Are you kidding me? 😝",
+  "Think fast! YES is the only option 😉"
+];
+
+// Start Quiz
+startBtn.addEventListener("click", () => {
+  introCard.style.display = "none";
+  quizCard.style.display = "block";
+  loadQuestion();
+});
+
+function loadQuestion(){
+  questionEl.textContent = questions[currentQ];
+  funMessage.textContent = "";
+  // Position NO button initially
+  noBtn.style.top = yesBtn.offsetTop + "px";
+  noBtn.style.left = (yesBtn.offsetLeft + 120) + "px";
 }
 
-function answerYes(n){
-  document.getElementById("q"+n).style.display="none";
-  if(n<4){
-    document.getElementById("q"+(n+1)).style.display="block";
-  }else{
-    document.getElementById("final-btn").style.display="block";
+// NO button teasing
+noBtn.addEventListener("mouseenter", () => {
+  const maxX = card.clientWidth - noBtn.offsetWidth;
+  const maxY = card.clientHeight - noBtn.offsetHeight;
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+
+  funMessage.textContent = funnyNoMessages[Math.floor(Math.random() * funnyNoMessages.length)];
+});
+
+// YES button
+yesBtn.addEventListener("click", (e) => {
+  funMessage.textContent = "✅ Got it!";
+  questionEl.innerHTML += ' <span class="tick">✔</span>';
+
+  // Heart animation
+  createHeart(e.clientX, e.clientY);
+
+  currentQ++;
+  if(currentQ < questions.length){
+    setTimeout(loadQuestion, 700);
+  } else {
+    setTimeout(() => {
+      questionEl.style.display = "none";
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      funMessage.style.display = "none";
+      successMessage.style.display = "block";
+      gifContainer.style.display = "block";
+
+      // Mini confetti + hearts celebration
+      launchConfetti(30);
+    }, 700);
   }
+});
+
+// Create floating heart
+function createHeart(x, y){
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = (x - 10) + "px";
+  heart.style.top = (y - 20) + "px";
+  heart.textContent = "💖";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(), 1500);
 }
 
-function goFinal(){
-  window.location.href="final.html";
+// Launch confetti + hearts
+function launchConfetti(count){
+  for(let i=0; i<count; i++){
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random()*window.innerWidth + "px";
+    confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
+    document.body.appendChild(confetti);
+    setTimeout(()=>confetti.remove(), 3000);
+
+    // also floating heart
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left = Math.random()*window.innerWidth + "px";
+    heart.style.top = (window.innerHeight - 50) + "px";
+    heart.textContent = "💖";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 1500);
+  }
 }
 </script>
 </body>
