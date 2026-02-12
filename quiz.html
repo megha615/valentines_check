@@ -15,7 +15,6 @@ body {
   height: 100vh;
   position: relative;
 }
-
 .card {
   background: white;
   padding: 40px 50px;
@@ -25,9 +24,7 @@ body {
   width: 500px;
   z-index: 10;
 }
-
 h2 { color: #d6336c; margin-bottom: 20px; }
-
 button {
   padding: 12px 25px;
   margin: 15px;
@@ -36,24 +33,16 @@ button {
   border-radius: 25px;
   cursor: pointer;
 }
-
 #start-btn { background-color: #ff69a5; color: white; }
 #yes-btn { background-color: #ff4d6d; color: white; }
 #yes-btn:hover { background-color: #e0315b; }
 #no-btn { background-color: #adb5bd; color: white; position: absolute; }
-
 #fun-message { margin-top: 15px; color: #ff4d6d; font-weight: bold; min-height:24px; }
 #success-message { display:none; margin-top:20px; font-size:20px; font-weight:bold; color:#ff4d6d; }
 #gif-container { display:none; margin-top:20px; }
 .tick { color: green; font-weight:bold; margin-left:10px; }
-
-#certificate-card { display:none; background:#fff0f8; border:4px dashed #ff4d6d; padding:30px 40px; border-radius:25px; text-align:center; margin-top:20px; }
-#certificate-card h2 { color:#d6336c; }
-#certificate-card img { width:100%; border-radius:15px; border:3px solid #ff4d6d; margin-top:15px; }
-
 .heart { position:absolute; color:#ff4d6d; font-size:20px; animation: float 1.5s linear forwards; }
 @keyframes float { 0%{transform:translateY(0) scale(1); opacity:1;} 100%{transform:translateY(-150px) scale(1.5); opacity:0;} }
-
 .confetti { position:absolute; width:10px; height:10px; border-radius:50%; opacity:0.7; animation:fall 3s linear forwards; }
 @keyframes fall { 0%{transform:translateY(0) rotate(0deg); opacity:1;} 100%{transform:translateY(400px) rotate(360deg); opacity:0;} }
 </style>
@@ -77,43 +66,32 @@ button {
   </div>
 </div>
 
-<div id="certificate-card">
-  <h2>🎉 Official Valentine Certificate 🎉</h2>
-  <p>Congratulations! You are officially my Valentine 💖💘</p>
-  <button id="download-btn">Download Certificate 💌</button>
-  <img id="certificate-img" src="couple.jpeg" alt="Valentine Certificate">
-</div>
-
 <script>
-const introCard = document.getElementById("intro-card");
-const quizCard = document.getElementById("quiz-card");
-const startBtn = document.getElementById("start-btn");
-const questionEl = document.getElementById("question");
-const yesBtn = document.getElementById("yes-btn");
-const noBtn = document.getElementById("no-btn");
-const funMessage = document.getElementById("fun-message");
-const successMessage = document.getElementById("success-message");
-const gifContainer = document.getElementById("gif-container");
-const certCard = document.getElementById("certificate-card");
-const certImg = document.getElementById("certificate-img");
-const downloadBtn = document.getElementById("download-btn");
-const card = document.querySelector(".card");
+const introCard=document.getElementById("intro-card");
+const quizCard=document.getElementById("quiz-card");
+const startBtn=document.getElementById("start-btn");
+const questionEl=document.getElementById("question");
+const yesBtn=document.getElementById("yes-btn");
+const noBtn=document.getElementById("no-btn");
+const funMessage=document.getElementById("fun-message");
+const successMessage=document.getElementById("success-message");
+const gifContainer=document.getElementById("gif-container");
+const card=document.querySelector(".card");
 
-const questions = [
-  "🍟 Do you promise to share your fries without pretending you're full?",
-  "🌟 Will you hype me up like I'm the main character?",
-  "📱 Will you reply fast instead of 'seen 2 hours ago'?",
-  "😜 Are you ready for random mood swings and still stay?",
-  "😂 Will you survive my silly jokes and memes forever?"
+const questions=[
+  "🍟 Share your fries without pretending you're full?",
+  "🌟 Hype me up like main character?",
+  "📱 Reply fast instead of 'seen 2 hours ago'?",
+  "😜 Survive my random mood swings?",
+  "😂 Laugh at my silly jokes forever?"
 ];
-
-let currentQ = 0;
-const funnyNoMessages = [
+let currentQ=0;
+const funnyNoMessages=[
   "Oops! NO is not allowed! 😅",
-  "Come on, you know the answer is YES 💘",
-  "Ha! Try again, NO disappears 😏",
-  "NO? Are you kidding me? 😝",
-  "Think fast! YES is the only option 😉"
+  "Come on, answer is YES 💘",
+  "Ha! NO disappears 😏",
+  "NO? Are you kidding? 😝",
+  "Think fast! YES only 😉"
 ];
 
 startBtn.addEventListener("click",()=>{
@@ -123,22 +101,21 @@ startBtn.addEventListener("click",()=>{
 });
 
 function loadQuestion(){
-  questionEl.textContent = questions[currentQ];
-  funMessage.textContent = "";
-  noBtn.style.top = yesBtn.offsetTop + "px";
-  noBtn.style.left = (yesBtn.offsetLeft + 120) + "px";
+  questionEl.textContent=questions[currentQ];
+  funMessage.textContent="";
+  noBtn.style.top=yesBtn.offsetTop+"px";
+  noBtn.style.left=(yesBtn.offsetLeft+120)+"px";
 }
 
-noBtn.addEventListener("mouseenter", ()=>{
-  const maxX = card.clientWidth - noBtn.offsetWidth;
-  const maxY = card.clientHeight - noBtn.offsetHeight;
-  noBtn.style.left = Math.random()*maxX + "px";
-  noBtn.style.top = Math.random()*maxY + "px";
-  funMessage.textContent = funnyNoMessages[Math.floor(Math.random()*funnyNoMessages.length)];
+noBtn.addEventListener("mouseenter",()=>{
+  const maxX=card.clientWidth-noBtn.offsetWidth;
+  const maxY=card.clientHeight-noBtn.offsetHeight;
+  noBtn.style.left=Math.random()*maxX+"px";
+  noBtn.style.top=Math.random()*maxY+"px";
+  funMessage.textContent=funnyNoMessages[Math.floor(Math.random()*funnyNoMessages.length)];
 });
 
 yesBtn.addEventListener("click",(e)=>{
-  funMessage.textContent="✅ Got it!";
   questionEl.innerHTML+=' <span class="tick">✔</span>';
   createHeart(e.clientX,e.clientY);
   currentQ++;
@@ -152,12 +129,10 @@ yesBtn.addEventListener("click",(e)=>{
       successMessage.style.display="block";
       gifContainer.style.display="block";
       launchConfetti(50);
-      // Show certificate after 3 seconds
-      setTimeout(()=>{
-        quizCard.style.display="none";
-        certCard.style.display="block";
-        launchConfetti(50);
-      },3000);
+
+      // Redirect to final.html after 4 seconds
+      setTimeout(()=>{ window.location.href="final.html"; },4000);
+
     },700);
   }
 });
@@ -180,26 +155,9 @@ function launchConfetti(count){
     confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
     document.body.appendChild(confetti);
     setTimeout(()=>confetti.remove(),3000);
-    const heart=document.createElement("div");
-    heart.classList.add("heart");
-    heart.style.left=Math.random()*window.innerWidth+"px";
-    heart.style.top=(window.innerHeight-50)+"px";
-    heart.textContent="💖";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),1500);
   }
 }
-
-downloadBtn.addEventListener("click",()=>{
-  // Show image is already displayed
-  launchConfetti(50);
-  const link=document.createElement("a");
-  link.href=certImg.src;
-  link.download="My_Valentine_Certificate.jpg";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-});
 </script>
+
 </body>
 </html>
