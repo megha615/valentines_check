@@ -44,49 +44,62 @@ button {
 .heart { position:absolute; color:#ff4d6d; font-size:20px; animation: float 1.5s linear forwards; }
 @keyframes float { 0%{transform:translateY(0) scale(1); opacity:1;} 100%{transform:translateY(-150px) scale(1.5); opacity:0;} }
 .confetti { position:absolute; width:10px; height:10px; border-radius:50%; opacity:0.7; animation:fall 3s linear forwards; }
-@keyframes fall { 0%{transform:translateY(0) rotate(0deg); opacity:1;} 100%{transform:translateY(400px) rotate(360deg); opacity:0;} }
+@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1;} 100% { transform:translateY(400px) rotate(360deg); opacity:0; } }
 </style>
 </head>
 <body>
 
+<!-- Intro Card -->
 <div class="card" id="intro-card">
   <h2>Hey Cutie! 💖<br>Before you become my Valentine...</h2>
   <p>Survive these hilarious tests 😏</p>
   <button id="start-btn">Start Quiz 😎</button>
 </div>
 
+<!-- Quiz Card -->
 <div class="card" id="quiz-card" style="display:none;">
   <h2 id="question"></h2>
   <button id="yes-btn">Yes 💘</button>
   <button id="no-btn">No 😅</button>
   <div id="fun-message"></div>
-  <div id="success-message">Yayyy Darshan said YES!!! 💖🥰</div>
+
+  <div id="success-message">
+    Yayyy Darshan said YES!!! 💖🥰
+    <br>
+    <button id="view-cert-btn">Click here to view your certificate 💌</button>
+  </div>
+
   <div id="gif-container">
     <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnBmYnNqcWU5ejUycTR2a251NWxicThoOXp6MnJjdXg0dHJ6dW43YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/igB2Th9e4nW6s/giphy.gif" width="300">
   </div>
 </div>
 
 <script>
-const introCard=document.getElementById("intro-card");
-const quizCard=document.getElementById("quiz-card");
-const startBtn=document.getElementById("start-btn");
-const questionEl=document.getElementById("question");
-const yesBtn=document.getElementById("yes-btn");
-const noBtn=document.getElementById("no-btn");
-const funMessage=document.getElementById("fun-message");
-const successMessage=document.getElementById("success-message");
-const gifContainer=document.getElementById("gif-container");
-const card=document.querySelector(".card");
+const introCard = document.getElementById("intro-card");
+const quizCard = document.getElementById("quiz-card");
+const startBtn = document.getElementById("start-btn");
+const questionEl = document.getElementById("question");
+const yesBtn = document.getElementById("yes-btn");
+const noBtn = document.getElementById("no-btn");
+const funMessage = document.getElementById("fun-message");
+const successMessage = document.getElementById("success-message");
+const gifContainer = document.getElementById("gif-container");
+const card = document.querySelector(".card");
+const viewCertBtn = document.getElementById("view-cert-btn");
 
-const questions=[
-  "🍟 Share your fries without pretending you're full?",
-  "🌟 Hype me up like main character?",
-  "📱 Reply fast instead of 'seen 2 hours ago'?",
-  "😜 Survive my random mood swings?",
-  "😂 Laugh at my silly jokes forever?"
+// Funny YES-only questions
+const questions = [
+  "🍟 Will you share your fries without pretending you're full?",
+  "🌟 Will you hype me up like I'm the main character?",
+  "📱 Will you reply fast instead of 'seen 2 hours ago'?",
+  "😜 Are you ready for random mood swings and still stay?",
+  "😂 Will you laugh at my silly jokes forever?"
 ];
-let currentQ=0;
-const funnyNoMessages=[
+
+let currentQ = 0;
+
+// Funny NO responses
+const funnyNoMessages = [
   "Oops! NO is not allowed! 😅",
   "Come on, answer is YES 💘",
   "Ha! NO disappears 😏",
@@ -94,69 +107,76 @@ const funnyNoMessages=[
   "Think fast! YES only 😉"
 ];
 
-startBtn.addEventListener("click",()=>{
-  introCard.style.display="none";
-  quizCard.style.display="block";
+// Start Quiz
+startBtn.addEventListener("click", () => {
+  introCard.style.display = "none";
+  quizCard.style.display = "block";
   loadQuestion();
 });
 
-function loadQuestion(){
-  questionEl.textContent=questions[currentQ];
-  funMessage.textContent="";
-  noBtn.style.top=yesBtn.offsetTop+"px";
-  noBtn.style.left=(yesBtn.offsetLeft+120)+"px";
+function loadQuestion() {
+  questionEl.textContent = questions[currentQ];
+  funMessage.textContent = "";
+  noBtn.style.top = yesBtn.offsetTop + "px";
+  noBtn.style.left = (yesBtn.offsetLeft + 120) + "px";
 }
 
-noBtn.addEventListener("mouseenter",()=>{
-  const maxX=card.clientWidth-noBtn.offsetWidth;
-  const maxY=card.clientHeight-noBtn.offsetHeight;
-  noBtn.style.left=Math.random()*maxX+"px";
-  noBtn.style.top=Math.random()*maxY+"px";
-  funMessage.textContent=funnyNoMessages[Math.floor(Math.random()*funnyNoMessages.length)];
+// Move NO button randomly
+noBtn.addEventListener("mouseenter", () => {
+  const maxX = card.clientWidth - noBtn.offsetWidth;
+  const maxY = card.clientHeight - noBtn.offsetHeight;
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+  funMessage.textContent = funnyNoMessages[Math.floor(Math.random() * funnyNoMessages.length)];
 });
 
-yesBtn.addEventListener("click",(e)=>{
-  questionEl.innerHTML+=' <span class="tick">✔</span>';
-  createHeart(e.clientX,e.clientY);
+// YES button click
+yesBtn.addEventListener("click", (e) => {
+  questionEl.innerHTML += ' <span class="tick">✔</span>';
+  createHeart(e.clientX, e.clientY);
   currentQ++;
-  if(currentQ<questions.length){ setTimeout(loadQuestion,700); }
-  else{
-    setTimeout(()=>{
-      questionEl.style.display="none";
-      yesBtn.style.display="none";
-      noBtn.style.display="none";
-      funMessage.style.display="none";
-      successMessage.style.display="block";
-      gifContainer.style.display="block";
+  if (currentQ < questions.length) {
+    setTimeout(loadQuestion, 700);
+  } else {
+    setTimeout(() => {
+      questionEl.style.display = "none";
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      funMessage.style.display = "none";
+      successMessage.style.display = "block";
+      gifContainer.style.display = "block";
       launchConfetti(50);
-
-      // Redirect to final.html after 4 seconds
-      setTimeout(()=>{ window.location.href="final.html"; },4000);
-
-    },700);
+    }, 700);
   }
 });
 
-function createHeart(x,y){
-  const heart=document.createElement("div");
+// Create heart animation
+function createHeart(x, y) {
+  const heart = document.createElement("div");
   heart.classList.add("heart");
-  heart.style.left=(x-10)+"px";
-  heart.style.top=(y-20)+"px";
-  heart.textContent="💖";
+  heart.style.left = (x - 10) + "px";
+  heart.style.top = (y - 20) + "px";
+  heart.textContent = "💖";
   document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),1500);
+  setTimeout(() => heart.remove(), 1500);
 }
 
-function launchConfetti(count){
-  for(let i=0;i<count;i++){
-    const confetti=document.createElement("div");
+// Confetti animation
+function launchConfetti(count) {
+  for (let i = 0; i < count; i++) {
+    const confetti = document.createElement("div");
     confetti.classList.add("confetti");
-    confetti.style.left=Math.random()*window.innerWidth+"px";
-    confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360},100%,70%)`;
     document.body.appendChild(confetti);
-    setTimeout(()=>confetti.remove(),3000);
+    setTimeout(() => confetti.remove(), 3000);
   }
 }
+
+// Redirect to final certificate page
+viewCertBtn.addEventListener("click", () => {
+  window.location.href = "final.html";
+});
 </script>
 
 </body>
