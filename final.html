@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Your Valentine Certificate 💖</title>
+<title>Your Lifetime Valentine Certificate 💖</title>
 <style>
 body {
   margin:0;
@@ -27,7 +27,7 @@ body {
 }
 h2 { color:#d6336c; margin-bottom:15px; }
 p { font-size:18px; margin-bottom:20px; }
-#certificate-img { width:100%; border-radius:15px; border:3px solid #ff4d6d; margin-top:10px; }
+#certificate-img { width:100%; max-width:500px; border-radius:15px; border:3px solid #ff4d6d; margin-top:10px; }
 button {
   padding:12px 25px;
   font-size:18px;
@@ -46,7 +46,7 @@ button:hover { background:#e0315b; }
 <body>
 
 <div class="card">
-  <h2>🎉 Finally you are my forever Valentine 🎉</h2>
+  <h2>🎉 You are my lifetime Valentine 🎉</h2>
   <p>Date: <span id="date"></span></p>
   <img id="certificate-img" src="couple.jpeg" alt="Valentine Certificate">
   <br>
@@ -54,32 +54,34 @@ button:hover { background:#e0315b; }
 </div>
 
 <script>
-// Set current date
-document.getElementById("date").textContent=new Date().toLocaleDateString();
+// Show current date
+document.getElementById("date").textContent = new Date().toLocaleDateString();
 
 // Confetti effect
 function launchConfetti(count){
   for(let i=0;i<count;i++){
-    const confetti=document.createElement("div");
+    const confetti = document.createElement("div");
     confetti.classList.add("confetti");
-    confetti.style.left=Math.random()*window.innerWidth+"px";
-    confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360},100%,70%)`;
     document.body.appendChild(confetti);
-    setTimeout(()=>confetti.remove(),3000);
+    setTimeout(()=>confetti.remove(), 3000);
   }
 }
 launchConfetti(50);
 
-// Download certificate
-const downloadBtn=document.getElementById("download-btn");
-const certImg=document.getElementById("certificate-img");
+// Download certificate button
+const downloadBtn = document.getElementById("download-btn");
+const certImg = document.getElementById("certificate-img");
 
 downloadBtn.addEventListener("click",()=>{
-  // Show image already on screen and download
+  // Confetti for download
   launchConfetti(30);
-  const link=document.createElement("a");
-  link.href=certImg.src;
-  link.download="My_Valentine_Certificate.jpg";
+
+  // Create a link to download the image
+  const link = document.createElement("a");
+  link.href = certImg.src;
+  link.download = "My_Lifetime_Valentine_Certificate.jpg";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
