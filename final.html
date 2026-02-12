@@ -2,127 +2,87 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Congratulations 💖</title>
+<title>Your Valentine Certificate 💖</title>
 <style>
-body{
+body {
   margin:0;
-  height:100vh;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#ffe6f0,#fff5f8);
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family:Arial;
-  background-image:url('gitstick.png');
-  background-repeat:repeat;
-  background-size:80px 80px;
+  height:100vh;
+  overflow:hidden;
+  position:relative;
 }
-.card{
-  background:white;
-  padding:50px;
-  border-radius:20px;
+.card {
+  background:#fff0f8;
+  border:4px dashed #ff4d6d;
+  border-radius:25px;
+  padding:30px 40px;
   text-align:center;
-  box-shadow:0 15px 40px rgba(0,0,0,0.2);
-  width:500px;
-  position:relative;
-  z-index:10;
-}
-#certificate{
-  margin-top:20px;
-  padding:20px;
-  border:2px dashed #ff4d6d;
-  color:#d6336c;
-  font-size:18px;
+  max-width:600px;
+  box-shadow:0 10px 30px rgba(255,0,105,0.2);
   position:relative;
 }
-#certificate img{
-  display:none; /* Hidden initially */
-  margin-top:20px;
-  border-radius:10px;
-  max-width:100%;
-}
-button{
-  margin-top:20px;
+h2 { color:#d6336c; margin-bottom:15px; }
+p { font-size:18px; margin-bottom:20px; }
+#certificate-img { width:100%; border-radius:15px; border:3px solid #ff4d6d; margin-top:10px; }
+button {
   padding:12px 25px;
+  font-size:18px;
   border:none;
   border-radius:25px;
-  background:#28a745;
-  color:white;
   cursor:pointer;
-  font-size:16px;
+  background:#ff4d6d;
+  color:white;
+  margin-top:15px;
 }
-button:hover{
-  opacity:0.8;
-}
+button:hover { background:#e0315b; }
+.confetti { position:absolute; width:10px; height:10px; border-radius:50%; opacity:0.7; animation:fall 3s linear forwards; }
+@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1;} 100% { transform:translateY(400px) rotate(360deg); opacity:0; } }
 </style>
 </head>
 <body>
 
 <div class="card">
-<h2>Congratulations 💖</h2>
-<p>You are officially my Valentine 😌</p>
-
-<div id="certificate">
-🎉 Certificate of Valentine Acceptance 🎉<br><br>
-This certifies that <b>Darshan</b><br>
-has successfully completed all emotional tests<br>
-and is now officially my Valentine 💘<br><br>
-Date: <span id="date"></span>
-
-<!-- Image that will appear when downloading -->
-<img id="cert-image" src="couple.jpeg" alt="Couple Image">
-</div>
-
-<button id="downloadBtn">Download Certificate 💌</button>
+  <h2>🎉 Finally you are my forever Valentine 🎉</h2>
+  <p>Date: <span id="date"></span></p>
+  <img id="certificate-img" src="couple.jpeg" alt="Valentine Certificate">
+  <br>
+  <button id="download-btn">Download Certificate 💌</button>
 </div>
 
 <script>
-// Set date
-document.getElementById("date").innerText = new Date().toLocaleDateString();
+// Set current date
+document.getElementById("date").textContent=new Date().toLocaleDateString();
 
-document.getElementById("downloadBtn").addEventListener("click", function(){
+// Confetti effect
+function launchConfetti(count){
+  for(let i=0;i<count;i++){
+    const confetti=document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left=Math.random()*window.innerWidth+"px";
+    confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
+    document.body.appendChild(confetti);
+    setTimeout(()=>confetti.remove(),3000);
+  }
+}
+launchConfetti(50);
 
-    // Show the image on screen
-    const imgOnScreen = document.getElementById("cert-image");
-    imgOnScreen.style.display = "block";
+// Download certificate
+const downloadBtn=document.getElementById("download-btn");
+const certImg=document.getElementById("certificate-img");
 
-    // Create canvas for download
-    const canvas = document.createElement("canvas");
-    canvas.width = 800;
-    canvas.height = 600;
-    const ctx = canvas.getContext("2d");
-
-    // Background
-    ctx.fillStyle = "#fff0f6";
-    ctx.fillRect(0,0,800,600);
-
-    // Border
-    ctx.strokeStyle = "#ff4d6d";
-    ctx.lineWidth = 6;
-    ctx.strokeRect(20,20,760,560);
-
-    // Certificate text
-    ctx.fillStyle = "#d6336c";
-    ctx.font = "bold 36px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("Certificate of Valentine Acceptance 💖", 400, 100);
-
-    ctx.font = "24px Arial";
-    ctx.fillText("This certifies that Darshan", 400, 170);
-    ctx.fillText("has successfully completed all emotional tests", 400, 210);
-    ctx.fillText("and is now officially my Valentine 💘", 400, 250);
-    ctx.fillText("Date: " + new Date().toLocaleDateString(), 400, 290);
-
-    // Draw image for download
-    const img = new Image();
-    img.src = "couple.jpeg";
-    img.onload = function(){
-        ctx.drawImage(img, 275, 320, 250, 180);
-
-        // Download
-        const link = document.createElement("a");
-        link.download = "Valentine_Certificate.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    };
+downloadBtn.addEventListener("click",()=>{
+  // Show image already on screen and download
+  launchConfetti(30);
+  const link=document.createElement("a");
+  link.href=certImg.src;
+  link.download="My_Valentine_Certificate.jpg";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 });
 </script>
 
