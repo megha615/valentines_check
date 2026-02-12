@@ -89,7 +89,7 @@ document.getElementById("downloadBtn").addEventListener("click", function(){
     ctx.drawImage(img, 275, 260, 250, 200);
 
     const link = document.createElement("a");
-    link.download = "Couple.jpeg";
+    link.download = "couple.jpeg";
     link.href = canvas.toDataURL("image/png");
     link.click();
   };
@@ -104,3 +104,4 @@ document.getElementById("downloadBtn").addEventListener("click", function(){
 
 </body>
 </html>
+
