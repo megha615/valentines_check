@@ -1,46 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>Your Lifetime Valentine Certificate 💖</title>
 <style>
-body {
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#ffe6f0,#fff5f8);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
-  position:relative;
-}
-.card {
-  background:#fff0f8;
-  border:4px dashed #ff4d6d;
-  border-radius:25px;
-  padding:30px 40px;
-  text-align:center;
-  max-width:500px; /* reduce card width */
-  box-shadow:0 10px 30px rgba(255,0,105,0.2);
-  position:relative;
-}
-h2 { color:#d6336c; margin-bottom:15px; font-size:28px; }
-p { font-size:16px; margin-bottom:15px; }
-#certificate-img { width:80%; max-width:350px; border-radius:15px; border:3px solid #ff4d6d; margin-top:10px; }
-button {
-  padding:10px 20px;
-  font-size:16px;
-  border:none;
-  border-radius:25px;
-  cursor:pointer;
-  background:#ff4d6d;
-  color:white;
-  margin-top:15px;
-}
-button:hover { background:#e0315b; }
-.confetti { position:absolute; width:8px; height:8px; border-radius:50%; opacity:0.7; animation:fall 3s linear forwards; }
-@keyframes fall { 0% { transform:translateY(0) rotate(0deg); opacity:1;} 100% { transform:translateY(400px) rotate(360deg); opacity:0; } }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe6f0, #fff5f8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  .card {
+    background: #fff0f8;
+    border: 4px dashed #ff4d6d;
+    border-radius: 25px;
+    padding: 30px 40px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(255, 0, 105, 0.2);
+    position: relative;
+    z-index: 10;
+  }
+  h2 {
+    color: #d6336c;
+    margin-bottom: 15px;
+    font-size: 28px;
+  }
+  p {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+  #certificate-img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    max-height: 300px;
+    border-radius: 15px;
+    border: 3px solid #ff4d6d;
+    margin-top: 10px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #ff4d6d;
+    color: white;
+    margin-top: 15px;
+  }
+  button:hover {
+    background: #e0315b;
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: float 2.5s linear forwards;
+    user-select: none;
+    pointer-events: none;
+  }
+  @keyframes float {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-200px) scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  /* Confetti */
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: fall 3s linear forwards;
+  }
+  @keyframes fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(400px) rotate(360deg);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 <body>
@@ -48,8 +108,8 @@ button:hover { background:#e0315b; }
 <div class="card">
   <h2>🎉 You are my lifetime Valentine 🎉</h2>
   <p>Date: <span id="date"></span></p>
-  <img id="certificate-img" src="couple.jpeg" alt="Valentine Certificate">
-  <br>
+  <img id="certificate-img" src="couple.jpeg" alt="Valentine Certificate" />
+  <br />
   <button id="download-btn">Download Certificate 💌</button>
 </div>
 
@@ -57,28 +117,42 @@ button:hover { background:#e0315b; }
 // Show current date
 document.getElementById("date").textContent = new Date().toLocaleDateString();
 
-// Confetti effect
-function launchConfetti(count){
-  for(let i=0;i<count;i++){
-    const confetti=document.createElement("div");
+// Floating hearts function
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.top = window.innerHeight + 20 + "px"; // start just below viewport
+  heart.textContent = "💖";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 2500);
+}
+
+// Launch multiple floating hearts repeatedly
+setInterval(createHeart, 400);
+
+// Confetti animation on page load
+function launchConfetti(count) {
+  for (let i = 0; i < count; i++) {
+    const confetti = document.createElement("div");
     confetti.classList.add("confetti");
-    confetti.style.left=Math.random()*window.innerWidth+"px";
-    confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
     document.body.appendChild(confetti);
-    setTimeout(()=>confetti.remove(),3000);
+    setTimeout(() => confetti.remove(), 3000);
   }
 }
 launchConfetti(50);
 
-// Download certificate button
-const downloadBtn=document.getElementById("download-btn");
-const certImg=document.getElementById("certificate-img");
+// Download certificate button functionality
+const downloadBtn = document.getElementById("download-btn");
+const certImg = document.getElementById("certificate-img");
 
-downloadBtn.addEventListener("click",()=>{
+downloadBtn.addEventListener("click", () => {
   launchConfetti(30);
-  const link=document.createElement("a");
-  link.href=certImg.src;
-  link.download="My_Lifetime_Valentine_Certificate.jpg";
+  const link = document.createElement("a");
+  link.href = certImg.src;
+  link.download = "My_Lifetime_Valentine_Certificate.jpg";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
