@@ -6,31 +6,27 @@
 <style>
 body {
   margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #ffe6f0, #fff5f8);
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   position: relative;
 }
 
 .card {
   background: white;
-  padding: 40px 60px;
+  padding: 40px 50px;
   border-radius: 20px;
   text-align: center;
   box-shadow: 0 15px 40px rgba(255, 105, 135, 0.2);
-  position: relative;
-  width: 450px;
+  width: 500px;
   z-index: 10;
 }
 
-h2 {
-  color: #d6336c;
-  margin-bottom: 30px;
-}
+h2 { color: #d6336c; margin-bottom: 20px; }
 
 button {
   padding: 12px 25px;
@@ -41,80 +37,25 @@ button {
   cursor: pointer;
 }
 
-#start-btn {
-  background-color: #ff69a5;
-  color: white;
-}
+#start-btn { background-color: #ff69a5; color: white; }
+#yes-btn { background-color: #ff4d6d; color: white; }
+#yes-btn:hover { background-color: #e0315b; }
+#no-btn { background-color: #adb5bd; color: white; position: absolute; }
 
-#yes-btn {
-  background-color: #ff4d6d;
-  color: white;
-}
+#fun-message { margin-top: 15px; color: #ff4d6d; font-weight: bold; min-height:24px; }
+#success-message { display:none; margin-top:20px; font-size:20px; font-weight:bold; color:#ff4d6d; }
+#gif-container { display:none; margin-top:20px; }
+.tick { color: green; font-weight:bold; margin-left:10px; }
 
-#yes-btn:hover {
-  background-color: #e0315b;
-}
+#certificate-card { display:none; background:#fff0f8; border:4px dashed #ff4d6d; padding:30px 40px; border-radius:25px; text-align:center; margin-top:20px; }
+#certificate-card h2 { color:#d6336c; }
+#certificate-card img { width:100%; border-radius:15px; border:3px solid #ff4d6d; margin-top:15px; }
 
-#no-btn {
-  background-color: #adb5bd;
-  color: white;
-  position: absolute;
-}
+.heart { position:absolute; color:#ff4d6d; font-size:20px; animation: float 1.5s linear forwards; }
+@keyframes float { 0%{transform:translateY(0) scale(1); opacity:1;} 100%{transform:translateY(-150px) scale(1.5); opacity:0;} }
 
-#fun-message {
-  margin-top: 15px;
-  color: #ff4d6d;
-  font-weight: bold;
-  min-height: 24px;
-}
-
-#success-message {
-  display: none;
-  margin-top: 20px;
-  font-size: 20px;
-  color: #ff4d6d;
-  font-weight: bold;
-}
-
-#gif-container {
-  display: none;
-  margin-top: 20px;
-}
-
-.tick {
-  color: green;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-/* Hearts animation */
-.heart {
-  position: absolute;
-  color: #ff4d6d;
-  font-size: 20px;
-  animation: float 1.5s linear forwards;
-}
-
-@keyframes float {
-  0% { transform: translateY(0) scale(1); opacity:1; }
-  100% { transform: translateY(-150px) scale(1.5); opacity:0; }
-}
-
-/* Confetti */
-.confetti {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #ff4d6d;
-  opacity: 0.7;
-  animation: fall 3s linear forwards;
-  border-radius: 50%;
-}
-
-@keyframes fall {
-  0% { transform: translateY(0) rotate(0deg); opacity:1; }
-  100% { transform: translateY(400px) rotate(360deg); opacity:0; }
-}
+.confetti { position:absolute; width:10px; height:10px; border-radius:50%; opacity:0.7; animation:fall 3s linear forwards; }
+@keyframes fall { 0%{transform:translateY(0) rotate(0deg); opacity:1;} 100%{transform:translateY(400px) rotate(360deg); opacity:0;} }
 </style>
 </head>
 <body>
@@ -130,13 +71,17 @@ button {
   <button id="yes-btn">Yes 💘</button>
   <button id="no-btn">No 😅</button>
   <div id="fun-message"></div>
-  <div id="success-message">
-    Yayyy Darshan said YES!!! 💖🥰
-  </div>
+  <div id="success-message">Yayyy Darshan said YES!!! 💖🥰</div>
   <div id="gif-container">
-    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnBmYnNqcWU5ejUycTR2a251NWxicThoOXp6MnJjdXg0dHJ6dW43YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/igB2Th9e4nW6s/giphy.gif"
-         width="300">
+    <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdnBmYnNqcWU5ejUycTR2a251NWxicThoOXp6MnJjdXg0dHJ6dW43YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/igB2Th9e4nW6s/giphy.gif" width="300">
   </div>
+</div>
+
+<div id="certificate-card">
+  <h2>🎉 Official Valentine Certificate 🎉</h2>
+  <p>Congratulations! You are officially my Valentine 💖💘</p>
+  <button id="download-btn">Download Certificate 💌</button>
+  <img id="certificate-img" src="couple.jpeg" alt="Valentine Certificate">
 </div>
 
 <script>
@@ -149,18 +94,20 @@ const noBtn = document.getElementById("no-btn");
 const funMessage = document.getElementById("fun-message");
 const successMessage = document.getElementById("success-message");
 const gifContainer = document.getElementById("gif-container");
+const certCard = document.getElementById("certificate-card");
+const certImg = document.getElementById("certificate-img");
+const downloadBtn = document.getElementById("download-btn");
 const card = document.querySelector(".card");
 
 const questions = [
-  "🍟 Do you promise to share your fries with chicken?",
+  "🍟 Do you promise to share your fries without pretending you're full?",
   "🌟 Will you hype me up like I'm the main character?",
   "📱 Will you reply fast instead of 'seen 2 hours ago'?",
   "😜 Are you ready for random mood swings and still stay?",
-  "😂 Will you survive my silly jokes and memes forever and respond them?"
+  "😂 Will you survive my silly jokes and memes forever?"
 ];
 
 let currentQ = 0;
-
 const funnyNoMessages = [
   "Oops! NO is not allowed! 😅",
   "Come on, you know the answer is YES 💘",
@@ -169,91 +116,90 @@ const funnyNoMessages = [
   "Think fast! YES is the only option 😉"
 ];
 
-// Start Quiz
-startBtn.addEventListener("click", () => {
-  introCard.style.display = "none";
-  quizCard.style.display = "block";
+startBtn.addEventListener("click",()=>{
+  introCard.style.display="none";
+  quizCard.style.display="block";
   loadQuestion();
 });
 
 function loadQuestion(){
   questionEl.textContent = questions[currentQ];
   funMessage.textContent = "";
-  // Position NO button initially
   noBtn.style.top = yesBtn.offsetTop + "px";
   noBtn.style.left = (yesBtn.offsetLeft + 120) + "px";
 }
 
-// NO button teasing
-noBtn.addEventListener("mouseenter", () => {
+noBtn.addEventListener("mouseenter", ()=>{
   const maxX = card.clientWidth - noBtn.offsetWidth;
   const maxY = card.clientHeight - noBtn.offsetHeight;
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-  noBtn.style.left = randomX + "px";
-  noBtn.style.top = randomY + "px";
-
-  funMessage.textContent = funnyNoMessages[Math.floor(Math.random() * funnyNoMessages.length)];
+  noBtn.style.left = Math.random()*maxX + "px";
+  noBtn.style.top = Math.random()*maxY + "px";
+  funMessage.textContent = funnyNoMessages[Math.floor(Math.random()*funnyNoMessages.length)];
 });
 
-// YES button
-yesBtn.addEventListener("click", (e) => {
-  funMessage.textContent = "✅ Got it!";
-  questionEl.innerHTML += ' <span class="tick">✔</span>';
-
-  // Heart animation
-  createHeart(e.clientX, e.clientY);
-
+yesBtn.addEventListener("click",(e)=>{
+  funMessage.textContent="✅ Got it!";
+  questionEl.innerHTML+=' <span class="tick">✔</span>';
+  createHeart(e.clientX,e.clientY);
   currentQ++;
-  if(currentQ < questions.length){
-    setTimeout(loadQuestion, 700);
-  } else {
-    setTimeout(() => {
-      questionEl.style.display = "none";
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-      funMessage.style.display = "none";
-      successMessage.style.display = "block";
-      gifContainer.style.display = "block";
-
-      // Mini confetti + hearts celebration
-      launchConfetti(30);
-    }, 700);
+  if(currentQ<questions.length){ setTimeout(loadQuestion,700); }
+  else{
+    setTimeout(()=>{
+      questionEl.style.display="none";
+      yesBtn.style.display="none";
+      noBtn.style.display="none";
+      funMessage.style.display="none";
+      successMessage.style.display="block";
+      gifContainer.style.display="block";
+      launchConfetti(50);
+      // Show certificate after 3 seconds
+      setTimeout(()=>{
+        quizCard.style.display="none";
+        certCard.style.display="block";
+        launchConfetti(50);
+      },3000);
+    },700);
   }
 });
 
-// Create floating heart
-function createHeart(x, y){
-  const heart = document.createElement("div");
+function createHeart(x,y){
+  const heart=document.createElement("div");
   heart.classList.add("heart");
-  heart.style.left = (x - 10) + "px";
-  heart.style.top = (y - 20) + "px";
-  heart.textContent = "💖";
+  heart.style.left=(x-10)+"px";
+  heart.style.top=(y-20)+"px";
+  heart.textContent="💖";
   document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(), 1500);
+  setTimeout(()=>heart.remove(),1500);
 }
 
-// Launch confetti + hearts
 function launchConfetti(count){
-  for(let i=0; i<count; i++){
-    const confetti = document.createElement("div");
+  for(let i=0;i<count;i++){
+    const confetti=document.createElement("div");
     confetti.classList.add("confetti");
-    confetti.style.left = Math.random()*window.innerWidth + "px";
-    confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
+    confetti.style.left=Math.random()*window.innerWidth+"px";
+    confetti.style.backgroundColor=`hsl(${Math.random()*360},100%,70%)`;
     document.body.appendChild(confetti);
-    setTimeout(()=>confetti.remove(), 3000);
-
-    // also floating heart
-    const heart = document.createElement("div");
+    setTimeout(()=>confetti.remove(),3000);
+    const heart=document.createElement("div");
     heart.classList.add("heart");
-    heart.style.left = Math.random()*window.innerWidth + "px";
-    heart.style.top = (window.innerHeight - 50) + "px";
-    heart.textContent = "💖";
+    heart.style.left=Math.random()*window.innerWidth+"px";
+    heart.style.top=(window.innerHeight-50)+"px";
+    heart.textContent="💖";
     document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(), 1500);
+    setTimeout(()=>heart.remove(),1500);
   }
 }
+
+downloadBtn.addEventListener("click",()=>{
+  // Show image is already displayed
+  launchConfetti(50);
+  const link=document.createElement("a");
+  link.href=certImg.src;
+  link.download="My_Valentine_Certificate.jpg";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+});
 </script>
 </body>
 </html>
-
